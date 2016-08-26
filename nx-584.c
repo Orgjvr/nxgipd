@@ -2,7 +2,7 @@
  *
  * Library of functions to implement NX-584 Protocol.
  * 
- * Copyright (C) 2009-2015 Timo Kokkonen <tjko@iki.fi>
+ * Copyright (C) 2009-2016 Timo Kokkonen <tjko@iki.fi>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -299,7 +299,7 @@ int nx_read_packet(int fd, nxmsg_t *msg, int protocol)
     while (len < multiplier) {
       do {
 	r = read(fd,&tmp[len],(multiplier-len));
-      } while (r==1 && errno==EINTR);
+      } while (r == -1 && errno==EINTR);
       
       if (r < 0) {
 	if (errno == EAGAIN) return 0;
@@ -336,7 +336,7 @@ int nx_read_packet(int fd, nxmsg_t *msg, int protocol)
     while (len < rawlen) {
       do {
 	r = read(fd,&tmp[len],(rawlen-len));
-      } while (r==1 && errno==EINTR);
+      } while (r == -1 && errno==EINTR);
       
       if (r < 0) {
 	if (errno == EAGAIN) return 0;
@@ -362,11 +362,9 @@ int nx_read_packet(int fd, nxmsg_t *msg, int protocol)
   
   /* decode message */
 
-  /* tmp[rawlen]=0; printf("tmp='%s'\n",tmp); */
-
   msg->len=msglen;
-  i=1;
-  tmpptr=tmp;
+  i=1; /* skip the message length in the buffer already */
+  tmpptr=tmp+i;
 
   while (i<=msglen+2) {
     char buf[3];
@@ -382,7 +380,7 @@ int nx_read_packet(int fd, nxmsg_t *msg, int protocol)
 	msglen=-1;
 	return -1;
       }
-    } else {
+    } else { /* NX_PROTOCOL_BINARY */
       if  (*tmpptr == 0x7e) {
 	logmsg(3,"nx_read_packet(): invalid data in packet %x (pos=%d)",*tmpptr,i);
 	len=0; /* 0x7e should always be considered as start of new packet */
@@ -589,7 +587,7 @@ int nx_send_message(int fd, int protocol, nxmsg_t *msg, int timeout, int retry, 
   do {
 
     if (nx_write_packet(fd,msg,protocol) < 0) {
-      logmsg(3,"nx_send_message(): failed to send message %02",msg->msgnum & NX_MSG_MASK);
+      logmsg(3,"nx_send_message(): failed to send message %02d (errno=%d)",msg->msgnum & NX_MSG_MASK, errno);
       return -1;
     }
     logmsg(3,"nx_send_message(): message %02x sent",msg->msgnum & NX_MSG_MASK);
