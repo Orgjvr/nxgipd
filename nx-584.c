@@ -27,6 +27,7 @@
 #include <errno.h>
 #include <string.h>
 #include <time.h>
+#include <sys/select.h>
 
 #define DEBUG 0
 
