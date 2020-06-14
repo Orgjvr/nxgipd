@@ -4,9 +4,9 @@
   <!-- serial port configuration --> 
 
   <serial>
-    <device>%%SERIALDEVICE%%</device>
-    <speed>%%SERIALBAUD%%</speed>
-    <protocol>%%SERIALPROTOCOL%%</protocol>
+    <device>%%SerialDevice%%</device>
+    <speed>%%SerialBaud%%</speed>
+    <protocol>%%SerialProtocol%%</protocol>
   </serial>
 
   <alarm>
@@ -21,7 +21,7 @@
 
          Set to 0 to enable auto detection of partitions.
      -->
-    <partitions>%%NUMPARTITIONS%%</partitions>
+    <partitions>%%NumPartitions%%</partitions>
 
     <!-- max no. of zones supported
  
@@ -33,13 +33,13 @@
 
          Set to 0 to enable auto detection of zones.
      -->
-    <zones>%%NUMZONES%%</zones>
+    <zones>%%NumZones%%</zones>
 
     <!-- panel status check interval (minutes) -->
-    <statuscheck>%%STATUSCHECKMINUTES%%</statuscheck>
+    <statuscheck>%%StatusCheckMinutes%%</statuscheck>
 
     <!-- time synchronization interval (hours), set 0 to disable -->
-    <timesync>%%TIMESYNCHOURS%%</timesync>
+    <timesync>%%TimeSyncHours%%</timesync>
 
   </alarm>
 
@@ -54,9 +54,9 @@
              -1 = disable logging target
    -->
   <!-- syslog: set logging treshold for syslog -->
-  <syslog>%%SYSLOGLEVEL%%</syslog>
+  <syslog>%%SysLogLevel%%</syslog>
   <!-- log: set logging treshold for log file -->
-  <log>%%LOGFILELEVEL%%</log>
+  <log>%%LogFileLevel%%</log>
 
 
   <!-- specify which events trigger running the alarm program -->
