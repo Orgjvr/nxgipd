@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<configuration>
+
+  <!-- serial port configuration --> 
+
+  <serial>
+    <device>%%SERIALDEVICE%%</device>
+    <speed>%%SERIALBAUD%%</speed>
+    <protocol>%%SERIALPROTOCOL%%</protocol>
+  </serial>
+
+  <alarm>
+
+    <!-- max no. of partitions supported, 
+
+         Set this based on the alarm panel mode:
+	   NX-8E 8
+	   NX-8  8
+	   NX-6  2
+	   NX-4  1
+
+         Set to 0 to enable auto detection of partitions.
+     -->
+    <partitions>%%NUMPARTITIONS%%</partitions>
+
+    <!-- max no. of zones supported
+ 
+	 Set this based on the alarm panel model:
+	   NX-8E  192
+	   NX-8   48
+	   NX-6   16
+	   NX-4   8
+
+         Set to 0 to enable auto detection of zones.
+     -->
+    <zones>%%NUMZONES%%</zones>
+
+    <!-- panel status check interval (minutes) -->
+    <statuscheck>%%STATUSCHECKMINUTES%%</statuscheck>
+
+    <!-- time synchronization interval (hours), set 0 to disable -->
+    <timesync>%%TIMESYNCHOURS%%</timesync>
+
+  </alarm>
+
+  <!-- logging configuration
+
+         logging tresholds: 
+              0 = minimal logging
+              1 = normal logging
+              2 = verbose logging
+              3 = very verbose logging (log serial I/O)
+	      4 = full logging
+             -1 = disable logging target
+   -->
+  <!-- syslog: set logging treshold for syslog -->
+  <syslog>%%SYSLOGLEVEL%%</syslog>
+  <!-- log: set logging treshold for log file -->
+  <log>%%LOGFILELEVEL%%</log>
+
+
+  <!-- specify which events trigger running the alarm program -->
+  <triggers>
+    <!-- logentry: specify which log entries trigger alarm program
+              0 = none
+	      1 = reporting log entries (alarm, alarm restore, etc..)
+	      2 = reporting log entries + open and close (non-reporting log entries)
+	      3 = all log entrie (reporting or non-reporting)
+    -->
+    <logentry>%%LogEntry%%</logentry>
+
+    <!-- partitionstatus: specify which partition status changes trigger alarm program
+              0 = none
+	      1 = all except "Ready" and "Not Ready".
+	      2 = all
+    -->
+    <partitionstatus>%%PartitionStatus%%</partitionstatus>
+
+    <!-- zonestatus: specify which zone status changes trigger alarm program
+              0 = none
+	      1 = only zone "Fault", "Trouble", or  "Tamper"
+	      2 = all
+    -->
+    <zonestatus>%%ZoneStatus%%</zonestatus>
+
+    <!-- maxprocesses: limit number of concurrent trigger processes,
+                       this can be used as fail-safe if trigger
+		       program is hanging (etc) so not to run system
+		       out of memory or processes
+
+		       0 = no limit (disabled)
+		       n = do not start any more trigger processes if there
+                           is already n such processess (still) running 
+     -->			   
+    <maxprocesses>%%MaxProcesses%%</maxprocesses>
+  </triggers>
+
+
+  <!-- IPC Shared Memory and Message Queue settings -->
+  <shm>
+
+    <!-- shared memory segment settings -->
+ 
+    <shmkey>0xf00f0042</shmkey>
+    <shmmode>0640</shmmode>
+    <!-- 
+    <shmuser>root</shmuser>
+     -->
+    <!--
+    <shmgroup>operator</shmgroup>
+     -->
+
+
+    <!-- message queue settings --> 
+
+    <msgkey>0xf00f0042</msgkey>
+    <msgmode>0660</msgmode>
+    <!-- 
+    <msguser>root</msguser>
+     -->
+    <!--
+    <msggroup>operator</msggroup>
+     -->
+
+  </shm>
+
+
+  <!-- file locations -->
+
+  <!-- directory: default directory for files (unless filename is specified
+       as absolute filename) 
+    -->
+  <directory>/data/nxgipd</directory>
+
+
+  <!-- logfile: specify log file location -->
+  <logfile>nxgipd.log</logfile>
+
+  <!-- statusfile: specify file to save system state -->
+  <statusfile>alarmstatus.xml</statusfile>
+
+  <!-- savestatus: specify time interval (in minutes) to save/update statusfile -->
+  <savestatus>1440</savestatus>
+
+  <!-- alarmprogram: specify program to run when an event is detected -->
+  <!--
+  <alarmprogram>/nxgipd/alarm-mqtt.sh</alarmprogram>
+  -->
+
+</configuration>
