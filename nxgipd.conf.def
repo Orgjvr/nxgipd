@@ -143,8 +143,6 @@
   <savestatus>1440</savestatus>
 
   <!-- alarmprogram: specify program to run when an event is detected -->
-  <!--
   <alarmprogram>/nxgipd/alarm-mqtt.sh</alarmprogram>
-  -->
 
 </configuration>
