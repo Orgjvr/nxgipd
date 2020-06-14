@@ -130,7 +130,7 @@
   <!-- directory: default directory for files (unless filename is specified
        as absolute filename) 
     -->
-  <directory>/data/nxgipd</directory>
+  <directory>/share/nxgipd</directory>
 
 
   <!-- logfile: specify log file location -->
