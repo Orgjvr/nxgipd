@@ -130,19 +130,19 @@
   <!-- directory: default directory for files (unless filename is specified
        as absolute filename) 
     -->
-  <directory>/share/nxgipd</directory>
+  <directory>%%DataPath%%</directory>
 
 
   <!-- logfile: specify log file location -->
-  <logfile>nxgipd.log</logfile>
+  <logfile>%%LogFilename%%</logfile>
 
   <!-- statusfile: specify file to save system state -->
-  <statusfile>alarmstatus.xml</statusfile>
+  <statusfile>%%StatusFilename%%</statusfile>
 
   <!-- savestatus: specify time interval (in minutes) to save/update statusfile -->
-  <savestatus>1440</savestatus>
+  <savestatus>%%StatusSaveInterval%%</savestatus>
 
   <!-- alarmprogram: specify program to run when an event is detected -->
-  <alarmprogram>/nxgipd/alarm-mqtt.sh</alarmprogram>
+  <alarmprogram>%%AlarmProgram%%</alarmprogram>
 
 </configuration>
